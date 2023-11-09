@@ -60,7 +60,6 @@ var boardRouter = require('./routes/board');
 var chooseRouter = require('./routes/choose');
 var resourceRouter = require('./routes/resource');
 
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -74,10 +73,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/Orders', OrdersRouter);
+app.use('/vehicles', vehiclesRouter);
 app.use('/board', boardRouter);
 app.use('/choose', chooseRouter);
-app.use('/resource', resourceRouter)
+app.use('/resource',resourceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

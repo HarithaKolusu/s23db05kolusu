@@ -4,4 +4,4 @@ const orderSchema = mongoose.Schema({
     id : Number,
     price : Number
 })
-module.exports = mongoose.model("orders", orderSchema)
+module.exports = mongoose.model("Orders", orderSchema)
