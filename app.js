@@ -4,11 +4,61 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+
+require('dotenv').config();
+const connectionString = process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString, 
+  { useNewUrlParser: true, 
+  useUnifiedTopology: true });
+
+  //Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connectionerror:'));
+db.once("open", function () {
+  console.log("Connection to DB succeeded")
+});
+
+var Orders = require("./models/Orders");
+
+async function recreateDB() {
+  // Delete everything
+  await Orders.deleteMany();
+  let instance1 = new Orders({
+    name: "Iphone", id: 1,
+    price: 200000
+  });
+
+  let instance2 = new Orders({
+    name: "Laptop", id: 20,
+    price: 1500000
+  });
+
+  let instance3 = new Orders({
+    name: "earbuds", id: 3,
+    price: 30000
+  });
+
+  const newArray = [instance1.save(), instance2.save(), instance3.save()];
+  Promise.all(newArray).then(doc => {
+    console.log("First object saved")
+    console.log("Second object saved")
+    console.log("Third object saved")
+  }
+  ).catch(err => {
+    console.error(err)
+  });
+}
+let reseed = true;
+if (reseed) { recreateDB(); }
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var OrdersRouter = require('./routes/Orders');
 var boardRouter = require('./routes/board');
 var chooseRouter = require('./routes/choose');
+var Orders = require('./models/Orders');
 
 var app = express();
 
