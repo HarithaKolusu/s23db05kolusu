@@ -13,9 +13,16 @@ exports.Orders_list = async function (req, res) {
 };
 
 // for a specific Orders.
-exports.Orders_detail = function (req, res) {
-    res.send('NOT IMPLEMENTED: Orders detail: ' + req.params.id);
-};
+exports.Orders_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
+    try {
+    result = await Costume.findById(req.params.id)
+    res.send(result)
+    } catch (error) {
+    res.status(500)
+    res.send(`{"error": document for id ${req.params.id} not found`);
+    }
+   };
 
 // Handle Orders create on POST.
 exports.Orders_create_post = async function (req, res) {
