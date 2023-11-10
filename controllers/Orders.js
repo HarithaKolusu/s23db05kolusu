@@ -16,7 +16,7 @@ exports.Orders_list = async function (req, res) {
 exports.Orders_detail = async function(req, res) {
     console.log("detail" + req.params.id)
     try {
-    result = await Costume.findById(req.params.id)
+    result = await Orders.findById(req.params.id)
     res.send(result)
     } catch (error) {
     res.status(500)
@@ -51,9 +51,25 @@ exports.Orders_delete = function (req, res) {
 };
 
 // Handle Orders update form on PUT.
-exports.Orders_update_put = function (req, res) {
-    res.send('NOT IMPLEMENTED: Orders update PUT' + req.params.id);
-};
+exports.Orders_update_put = async function(req, res) {
+    console.log(`update on id ${req.params.id} with body
+   ${JSON.stringify(req.body)}`)
+    try {
+    let toUpdate = await Orders.findById(req.params.id)
+    // Do updates of properties
+    if(req.body.name)
+    toUpdate.name = req.body.name;
+    if(req.body.id) toUpdate.id = req.body.id;
+    if(req.body.price) toUpdate.price = req.body.price;
+    let result = await toUpdate.save();
+    console.log("Sucess " + result)
+    res.send(result)
+    } catch (err) {
+    res.status(500)
+    res.send(`{"error": ${err}: Update for id ${req.params.id}
+   failed`);
+    }
+   };
 
 // VIEWS
 // Handle a show all view
