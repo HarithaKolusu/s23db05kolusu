@@ -26,17 +26,20 @@ async function recreateDB() {
   // Delete everything
   await Orders.deleteMany();
   let instance1 = new Orders({
-    name: "Iphone", id: 1,
+    name: "Iphone", 
+    id: 1,
     price: 200000
   });
 
   let instance2 = new Orders({
-    name: "Laptop", id: 20,
+    name: "Laptop", 
+    id: 20,
     price: 1500000
   });
 
   let instance3 = new Orders({
-    name: "earbuds", id: 3,
+    name: "earbuds", 
+    id: 3,
     price: 30000
   });
 
@@ -49,9 +52,9 @@ async function recreateDB() {
   ).catch(err => {
     console.error(err)
   });
-}
-let reseed = true;
-if (reseed) { recreateDB(); }
+  }
+  let reseed = true;
+  if (reseed) { recreateDB(); }
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -60,6 +63,7 @@ var boardRouter = require('./routes/board');
 var chooseRouter = require('./routes/choose');
 var resourceRouter = require('./routes/resource');
 
+var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -73,10 +77,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/vehicles', vehiclesRouter);
+app.use('/Orders', OrdersRouter);
 app.use('/board', boardRouter);
 app.use('/choose', chooseRouter);
-app.use('/resource',resourceRouter);
+app.use('/resource', resourceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -3,13 +3,12 @@ var router = express.Router();
 
 // Require controller modules.
 var api_controller = require('../controllers/api');
-
 var Orders_controller = require('../controllers/Orders');
 
 /// API ROUTE ///
 // GET resources base.
 router.get('/', api_controller.api);
-/// Orders ROUTES ///
+/// VEHICLES ROUTES ///
 // POST request for creating a Costume.
 router.post('/Orders', Orders_controller.Orders_create_post);
 // DELETE request to delete Costume.
