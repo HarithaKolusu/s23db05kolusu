@@ -46,9 +46,18 @@ exports.Orders_create_post = async function (req, res) {
 };
 
 // Handle Orders delete form on DELETE.
-exports.Orders_delete = function (req, res) {
-    res.send('NOT IMPLEMENTED: Orders delete DELETE ' + req.params.id);
-};
+// Handle Costume delete on DELETE.
+exports.Orders_delete = async function(req, res) {
+    console.log("delete " + req.params.id)
+    try {
+    result = await Orders.findByIdAndDelete(req.params.id)
+    console.log("Removed " + result)
+    res.send(result)
+    } catch (err) {
+    res.status(500)
+    res.send(`{"error": Error deleting ${err}}`);
+    }
+   };
 
 // Handle Orders update form on PUT.
 exports.Orders_update_put = async function(req, res) {
