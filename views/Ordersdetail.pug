@@ -1,23 +1,20 @@
 extends layout
 block content
- h1= title
-   if(toShow == null)
-    h2 No instance to update
- else
+   h1= title
    - let Ordersid = toShow._id
    - let Orders_name  = toShow.Orders_name
    - let Orders_id  = toShow.Orders_id
    - let Orders_price = toShow.Orders_price
-      div
-         div.row
-            div(class='OrdersAttr mr-3') Orders ID is:
-            div #{Ordersid}
-         div.row
-            div(class='OrdersAttr mr-3') Orders name is:
-            div #{Orders_name}
-         div.row
-            div(class='OrdersAttr mr-3') Orders id is:
-            div #{Orders_id}
-         div.row
-            div(class='OrdersAttr mr-3') Orders Cost is:
-            div #{Orders_price}
+   div
+      div.row
+         div(class='OrdersAttr mr-3') Orders ID is:
+         div #{Ordersid}
+      div.row
+         div(class='OrdersAttr mr-3') Orders name is:
+         div #{Orders_name}
+      div.row
+         div(class='OrdersAttr mr-3') Orders id is:
+         div #{Orders_id}
+      div.row
+         div(class='OrdersAttr mr-3') Orders Cost is:
+         div #{Orders_price}
