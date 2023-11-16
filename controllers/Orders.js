@@ -13,16 +13,16 @@ exports.Orders_list = async function (req, res) {
 };
 
 // for a specific Orders.
-exports.Orders_detail = async function(req, res) {
+exports.Orders_detail = async function (req, res) {
     console.log("detail" + req.params.id)
     try {
-    result = await Orders.findById(req.params.id)
-    res.send(result)
+        result = await Orders.findById(req.params.id)
+        res.send(result)
     } catch (error) {
-    res.status(500)
-    res.send(`{"error": document for id ${req.params.id} not found`);
+        res.status(500)
+        res.send(`{"error": document for id ${req.params.id} not found`);
     }
-   };
+};
 
 // Handle Orders create on POST.
 exports.Orders_create_post = async function (req, res) {
@@ -46,39 +46,38 @@ exports.Orders_create_post = async function (req, res) {
 };
 
 // Handle Orders delete form on DELETE.
-// Handle Costume delete on DELETE.
-exports.Orders_delete = async function(req, res) {
+exports.Orders_delete = async function (req, res) {
     console.log("delete " + req.params.id)
     try {
-    result = await Orders.findByIdAndDelete(req.params.id)
-    console.log("Removed " + result)
-    res.send(result)
+        result = await Orders.findByIdAndDelete(req.params.id)
+        console.log("Removed " + result)
+        res.send(result)
     } catch (err) {
-    res.status(500)
-    res.send(`{"error": Error deleting ${err}}`);
+        res.status(500)
+        res.send(`{"error": Error deleting ${err}}`);
     }
-   };
+};
 
 // Handle Orders update form on PUT.
-exports.Orders_update_put = async function(req, res) {
+exports.Orders_update_put = async function (req, res) {
     console.log(`update on id ${req.params.id} with body
    ${JSON.stringify(req.body)}`)
     try {
-    let toUpdate = await Orders.findById(req.params.id)
-    // Do updates of properties
-    if(req.body.name)
-    toUpdate.name = req.body.name;
-    if(req.body.id) toUpdate.id = req.body.id;
-    if(req.body.price) toUpdate.price = req.body.price;
-    let result = await toUpdate.save();
-    console.log("Sucess " + result)
-    res.send(result)
+        let toUpdate = await Orders.findById(req.params.id)
+        // Do updates of properties
+        if (req.body.name)
+            toUpdate.name = req.body.name;
+        if (req.body.id) toUpdate.id = req.body.id;
+        if (req.body.price) toUpdate.price = req.body.price;
+        let result = await toUpdate.save();
+        console.log("Sucess " + result)
+        res.send(result)
     } catch (err) {
-    res.status(500)
-    res.send(`{"error": ${err}: Update for id ${req.params.id}
+        res.status(500)
+        res.send(`{"error": ${err}: Update for id ${req.params.id}
    failed`);
     }
-   };
+};
 
 // VIEWS
 // Handle a show all view
@@ -90,5 +89,62 @@ exports.Orders_view_all_Page = async function (req, res) {
     catch (err) {
         res.status(500);
         res.send(`{"error": ${err}}`);
+    }
+};
+
+// Handle a show one view with id specified by query
+exports.Orders_view_one_Page = async function (req, res) {
+    console.log("single view for id " + req.query.id)
+    try {
+        result = await Orders.findById(req.query.id)
+        res.render('Ordersdetail', { title: 'Orders Detail', toShow: result });
+    }
+    catch (err) {
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+// Handle building the view for creating a vehicle.
+// No body, no in path parameter, no query.
+// Does not need to be async
+exports.Orders_create_Page = function (req, res) {
+    console.log("create view")
+    try {
+        res.render('Orderscreate', { title: 'Orders Create' });
+    }
+    catch (err) {
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+// Handle building the view for updating a costume.
+// query provides the id
+exports.Orders_update_Page = async function (req, res) {
+    console.log("update view for item " + req.query.id)
+    try {
+        let result = await Orders.findById(req.query.id)
+        res.render('Ordersupdate', { title: 'Orders Update', toShow: result });
+    }
+    catch (err) {
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+
+// Handle a delete one view with id from query
+exports.Orders_delete_Page = async function (req, res) {
+    console.log("Delete view for id " + req.query.id)
+    try {
+        result = await Orders.findById(req.query.id)
+        res.render('Ordersdelete', {
+            title: 'Orders Delete', toShow: result
+        });
+    }
+    catch (err) {
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
     }
 };
