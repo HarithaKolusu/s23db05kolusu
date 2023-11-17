@@ -6,10 +6,11 @@ block content
   div(class="container-fluid")
     div(class="row m-1")
       each o,index in results
-        - let destination = `dispatch(\"/Orders/update?id=${item._id}\")`
+        - let destination = `dispatch(\"/Orders/update?id=${o._id}\")`
         div(class="row-sm-2", class="m-1" onclick =`buy(${index})`) #{o.name}, #{o.id}, #{o.price}
           button.btn( class="btn-primary ml-1", onclick= destination) Update
-     script.
-        function dispatch(path){
-        window.location.href=path
-        }
+    
+  script.
+    function dispatch(path){
+      window.location.href=path
+    }
