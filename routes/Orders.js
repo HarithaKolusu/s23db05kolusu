@@ -8,11 +8,10 @@ const secured = (req, res, next) => {
     }
     res.redirect("/login");
 }
-
 /* GET home page. */
-router.get('/', secured,Orders_controller.Orders_view_all_Page );
+router.get('/', Orders_controller.Orders_view_all_Page );
 /* GET detail Orders page */
-router.get('/detail', secured, Orders_controller.Orders_view_one_Page);
+router.get('/detail', Orders_controller.Orders_view_one_Page);
 /* GET create Orders page */
 router.get('/create', secured, Orders_controller.Orders_create_Page);
 /* GET create update page */
