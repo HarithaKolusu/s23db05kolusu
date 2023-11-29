@@ -2,6 +2,13 @@ var express = require('express');
 var Orders_controller = require('../controllers/Orders');
 var router = express.Router();
 
+const secured = (req, res, next) => {
+    if (req.user) {
+        return next();
+    }
+    res.redirect("/login");
+}
+
 /* GET home page. */
 router.get('/', Orders_controller.Orders_view_all_Page );
 /* GET detail Orders page */
